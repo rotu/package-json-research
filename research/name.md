@@ -41,8 +41,9 @@ Analysis of the `name` property
   - One scope must only ever point to one registry.
   - One registry can host multiple scopes.
 
-### node
+### Node.js
 
+- Node.js does not require a `name` field.
 - Importing a package from another package is based on the path it is installed at in `node_modules`, NOT the `name` field in `package.json`.
 - The `name` field *can* be used within a package to refer to the same package<sup>[4]</sup>.
   - In order to enable self-imports by name, `package.json` must define an `exports` field.

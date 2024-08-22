@@ -45,7 +45,9 @@ Analysis of the `name` property
 
 - Node.js does not require a `name` field.
 - Importing a package from another package is based on the path it is installed at in `node_modules`, NOT the `name` field in `package.json`.
-- The `name` field *can* be used within a package to refer to the same package<sup>[4]</sup>.
+  - If a package is named `foo` but is installed or symlinked from `node_modules/bar`, it is found as `import('bar')`
+  - If a package is installed under two paths (e.g. with `npm install cowsay1@npm:cowsay cowsay2@npm:cowsay`) then importing either will result in *different* module objects. If the package is instead *linked* from two paths in `node_modules` (e.g. with `pnpm install cowsay1@npm:cowsay cowsay2@npm:cowsay`, then importing either will result in the *same* module object.
+- The `name` field *can* be used within a package to refer to the same package<sup>[4]</sup>. That is, if you have a `package.json` file with `"name":"foo"`, then inside that directory, `import("foo")` or `import("foo/bar")` will look at that directory before consulting `node_modules`.
   - In order to enable self-imports by name, `package.json` must define an `exports` field.
   - Neither a `main` field, nor a package-relative subpath will suffice instead of `exports`. Self-imports might *seem* to work if the package happens to be installed into `node_modules`.
   - The scope is part of the package name for purposes of self-reference. In a package with `"name": "@scope/foo"`, you must `import('@scope/foo')`, not e.g. `import('foo')`.

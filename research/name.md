@@ -41,12 +41,20 @@ Analysis of the `name` property
   - One scope must only ever point to one registry.
   - One registry can host multiple scopes.
 
+### node
+
+- Importing a package from another package is based on the path it is installed at in `node_modules`, NOT the `name` field in `package.json`.
+- The `name` field *can* be used within a package to refer to the same package<sup>[4]</sup>.
+  - The scope is part of the package name for purposes of self-reference. In a package with `"name": "@scope/foo"`, you must `import('@scope/foo')`, not e.g. `import('foo')`.
+
 ## Sources
 
 1. [npm `name` field documentation][1]
 2. [npm _Scope_ concept documentation][2]
 3. [npm `install` command documentation][3]
+4. [node `packages` documentation][4]
 
 [1]: <https://docs.npmjs.com/cli/configuring-npm/package-json#name>
 [2]: <https://docs.npmjs.com/cli/using-npm/scope>
 [3]: <https://docs.npmjs.com/cli/commands/npm-install>
+[4]: <https://nodejs.org/api/packages.html#packages_self_referencing_a_package_using_its_name>

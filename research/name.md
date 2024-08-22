@@ -6,6 +6,7 @@ Analysis of the `name` property
 
 - The `name` and `version` together form an identifier that is assumed to be completely unique<sup>[1]</sup>
   - In practice, the unique identifier for a package is also comprised of its registry. It is valid to have two packages with the same `name` and `version`, except one must be aliased so that the package manager can correctly resolve its registry value.
+  - 
 - The `name` property is optional if the package will not be published.<sup>[1]</sup>
   - Generally, it is also best practice to specify the [`"private": true`](./private.md) property so that the package is not accidentally published.
   - > [TODO: Is `name` actually optional?](https://github.com/openjs-foundation/package-json-research/issues/9)
@@ -40,6 +41,13 @@ Analysis of the `name` property
   - `npm config set <Scope>:registry <Registry URL>` or `npm login --registry=<Registry URL> --scope=<Scope>` (`<Scope>` must include the `@` symbol).
   - One scope must only ever point to one registry.
   - One registry can host multiple scopes.
+- Observations from npm@10.8.2:
+  - `npm install` installs dependencies listed in the current `package.json`.
+  - `npm install ./some/folder` will fail if `some/folder/package.json` is missing a `name`.
+  - `npm install alias@./some/folder` can install even if `./some/folder/package.json` does not exist.
+  - `npm install alias@./some/folder --install-links` can install even if `./some/folder/package.json` does not have a `name` nor `version`.
+  - `npm publish` and `npm pack` require both `name` and `version`.
+  - `npm view` requires the target package to have a `name`.
 
 ## Sources
 

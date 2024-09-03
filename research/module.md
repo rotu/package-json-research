@@ -1,7 +1,7 @@
 # module
 
 This describes the main entry point for ESM packages.
-Historically, `main` has been the *only* way to declare a package's modules to Node. Node more recently supports the more flexible `exports`.
+Historically, `main` has been the *only* way to declare a package's modules to Node.js. Node.js more recently supports the more flexible `exports`.
 In the meantime, bundlers converged around adding top-level field, with the most common being `module`, though this was never adopted by `node`.
 
 Where used by bundlers `module` is used in parallel with top-level `main`, et al. These are collectively referred to as `mainFields`.[^2]
